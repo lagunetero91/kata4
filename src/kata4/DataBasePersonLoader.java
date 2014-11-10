@@ -24,6 +24,8 @@ public class DataBasePersonLoader implements PersonLoader {
 
     private Person[] processQuery(ResultSet executeQuery) {
         ArrayList<Person> personList = new ArrayList<>();
+        while(executeQuery.next())
+            personList.add(processPerson(executeQuery));
         return personList.toArray(new Person[personList.size()]);
     }
     
