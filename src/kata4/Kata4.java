@@ -10,7 +10,13 @@ public class Kata4 {
         Connection connection = createConnection("people.db");
         PersonLoader personLoader = new DataBasePersonLoader(connection);
         HistogramBuilder<Person> builder = new HistogramBuilder<>(personLoader.load());
-        new ConsoleHistogramViewer<Person>().show(builder.build());
+        new ConsoleHistogramViewer<String>().show(builder.build(new AttributeExtractor<Person, String>() {
+
+            @Override
+            public String extract(Person person) {
+                return person.getMail().getDomain();
+            }
+        }));
     }
 
     private static Connection createConnection(String dbPath) throws SQLException {
